@@ -1,5 +1,5 @@
-import { newInMarketProperties } from '../lib/mockData';
-import PropertyCard from './PropertyCard';
+import { newInMarketProperties } from '@/lib/mockData';
+import PropertyCard from '../property/PropertyCard';
 
 export default function NewInMarket() {
     return (

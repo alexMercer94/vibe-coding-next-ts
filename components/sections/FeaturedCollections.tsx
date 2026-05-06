@@ -1,5 +1,5 @@
-import { featuredProperties } from '../lib/mockData';
-import FeaturedPropertyCard from './FeaturedPropertyCard';
+import { featuredProperties } from '@/lib/mockData';
+import FeaturedPropertyCard from '../property/PropertyCard';
 
 export default function FeaturedCollections() {
     return (

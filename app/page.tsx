@@ -1,7 +1,7 @@
-import FeaturedCollections from '../components/FeaturedCollections';
-import HeroSearch from '../components/HeroSearch';
-import Navbar from '../components/Navbar';
-import NewInMarket from '../components/NewInMarket';
+import Navbar from '../components/layout/Navbar';
+import FeaturedCollections from '../components/sections/FeaturedCollections';
+import HeroSearch from '../components/sections/HeroSearch';
+import NewInMarket from '../components/sections/NewInMarket';
 
 export default function Home() {
     return (
