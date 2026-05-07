@@ -6,6 +6,8 @@ interface FeaturedCollectionsProps {
 }
 
 export default function FeaturedCollections({ properties }: FeaturedCollectionsProps) {
+    if (properties.length === 0) return null;
+
     return (
         <section className="mb-16">
             <div className="flex items-end justify-between mb-8">
