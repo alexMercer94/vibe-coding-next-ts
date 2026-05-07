@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Property } from '../lib/mockData';
+import { Property } from '@/lib/properties';
 
 interface PropertyCardProps {
     property: Property;
@@ -13,9 +13,9 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <article className="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-soft transition-all duration-300 group cursor-pointer h-full flex flex-col">
             <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
-                    alt={property.imageAlt}
+                    alt={property.image_alt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    src={property.imageUrl}
+                    src={property.image_url}
                     fill
                     unoptimized
                 />
@@ -34,8 +34,8 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 <div className="flex justify-between items-baseline mb-2">
                     <h3 className="font-bold text-lg text-nordic-dark">
                         {property.price}
-                        {property.priceSuffix && (
-                            <span className="text-sm font-normal text-nordic-muted">{property.priceSuffix}</span>
+                        {property.price_suffix && (
+                            <span className="text-sm font-normal text-nordic-muted">{property.price_suffix}</span>
                         )}
                     </h3>
                 </div>

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Property } from '../lib/mockData';
+import { Property } from '@/lib/properties';
 
 interface FeaturedPropertyCardProps {
     property: Property;
@@ -10,9 +10,9 @@ export default function FeaturedPropertyCard({ property }: FeaturedPropertyCardP
         <div className="group relative rounded-xl overflow-hidden shadow-soft bg-white cursor-pointer">
             <div className="aspect-[4/3] w-full overflow-hidden relative">
                 <Image
-                    alt={property.imageAlt}
+                    alt={property.image_alt}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src={property.imageUrl}
+                    src={property.image_url}
                     fill
                     unoptimized
                 />
