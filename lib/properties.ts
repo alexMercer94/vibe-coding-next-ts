@@ -1,10 +1,22 @@
 import { supabase } from './supabase';
 
+export interface PropertyImage {
+    id: string;
+    property_id: string;
+    url: string;
+    alt_text: string | null;
+    is_primary: boolean;
+    created_at: string;
+}
+
 // Type that mirrors the Supabase `properties` table
 export interface Property {
     id: string;
     title: string;
+    slug: string;
     location: string;
+    latitude: number;
+    longitude: number;
     price: string;
     price_suffix: string | null;
     beds: number;
@@ -16,11 +28,42 @@ export interface Property {
     tag: 'FOR SALE' | 'FOR RENT' | null;
     is_featured: boolean;
     created_at: string;
+    property_images?: PropertyImage[];
 }
 
 export interface PaginatedProperties {
     properties: Property[];
     totalCount: number;
+}
+
+/**
+ * Fetch a single property by its slug, including its images.
+ */
+export async function getPropertyBySlug(slug: string): Promise<Property | null> {
+    const { data, error } = await supabase
+        .from('properties')
+        .select(`
+            *,
+            property_images(*)
+        `)
+        .eq('slug', slug)
+        .single();
+
+    if (error) {
+        console.error('Error fetching property by slug:', error);
+        return null;
+    }
+
+    // Sort images: primary first, then by created_at
+    if (data && data.property_images) {
+        data.property_images.sort((a: PropertyImage, b: PropertyImage) => {
+            if (a.is_primary) return -1;
+            if (b.is_primary) return 1;
+            return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+        });
+    }
+
+    return data as Property;
 }
 
 /**

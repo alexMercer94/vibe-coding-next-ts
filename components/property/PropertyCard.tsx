@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Property } from '@/lib/properties';
 
 interface PropertyCardProps {
@@ -10,8 +11,9 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     const tagColorClass = isForSale ? 'bg-nordic-dark/90' : 'bg-mosque/90';
 
     return (
-        <article className="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-soft transition-all duration-300 group cursor-pointer h-full flex flex-col">
-            <div className="relative aspect-[4/3] overflow-hidden">
+        <Link href={`/properties/${property.slug}`} className="block h-full">
+            <article className="bg-white rounded-xl overflow-hidden shadow-card hover:shadow-soft transition-all duration-300 group cursor-pointer h-full flex flex-col">
+                <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                     alt={property.image_alt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -53,6 +55,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     </div>
                 </div>
             </div>
-        </article>
+            </article>
+        </Link>
     );
 }

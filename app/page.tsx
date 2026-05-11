@@ -1,4 +1,4 @@
-import Navbar from '../components/layout/Navbar';
+
 import FeaturedCollections from '../components/sections/FeaturedCollections';
 import HeroSearch from '../components/sections/HeroSearch';
 import NewInMarket from '../components/sections/NewInMarket';
@@ -23,17 +23,14 @@ export default async function Home({
     const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
     return (
-        <>
-            <Navbar />
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-                <HeroSearch />
-                <FeaturedCollections properties={featuredProperties} />
-                <NewInMarket
-                    properties={newInMarketProperties}
-                    currentPage={page}
-                    totalPages={totalPages}
-                />
-            </main>
-        </>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+            <HeroSearch />
+            <FeaturedCollections properties={featuredProperties} />
+            <NewInMarket
+                properties={newInMarketProperties}
+                currentPage={page}
+                totalPages={totalPages}
+            />
+        </main>
     );
 }

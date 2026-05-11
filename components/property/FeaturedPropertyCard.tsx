@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Property } from '@/lib/properties';
 
 interface FeaturedPropertyCardProps {
@@ -7,8 +8,9 @@ interface FeaturedPropertyCardProps {
 
 export default function FeaturedPropertyCard({ property }: FeaturedPropertyCardProps) {
     return (
-        <div className="group relative rounded-xl overflow-hidden shadow-soft bg-white cursor-pointer">
-            <div className="aspect-[4/3] w-full overflow-hidden relative">
+        <Link href={`/properties/${property.slug}`} className="block">
+            <div className="group relative rounded-xl overflow-hidden shadow-soft bg-white cursor-pointer">
+                <div className="aspect-[4/3] w-full overflow-hidden relative">
                 <Image
                     alt={property.image_alt}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -50,6 +52,7 @@ export default function FeaturedPropertyCard({ property }: FeaturedPropertyCardP
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+        </Link>
     );
 }
