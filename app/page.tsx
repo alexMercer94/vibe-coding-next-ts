@@ -11,13 +11,26 @@ export default async function Home({
 }: {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-    const { page: pageParam } = await searchParams;
+    const resolvedSearchParams = await searchParams;
+    const pageParam = resolvedSearchParams.page;
     const page = Math.max(1, parseInt((pageParam as string) ?? '1', 10) || 1);
+
+    const query = resolvedSearchParams.query as string | undefined;
+    const type = resolvedSearchParams.type as string | undefined;
+    const beds = resolvedSearchParams.beds as string | undefined;
+    const baths = resolvedSearchParams.baths as string | undefined;
+
+    const filters = {
+        query,
+        type,
+        beds,
+        baths,
+    };
 
     const [featuredProperties, { properties: newInMarketProperties, totalCount }] =
         await Promise.all([
             getFeaturedProperties(),
-            getNewInMarketProperties(page, PAGE_SIZE),
+            getNewInMarketProperties(page, PAGE_SIZE, filters),
         ]);
 
     const totalPages = Math.ceil(totalCount / PAGE_SIZE);

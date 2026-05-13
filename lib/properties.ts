@@ -88,18 +88,42 @@ export async function getFeaturedProperties(): Promise<Property[]> {
  * Fetch paginated non-featured properties (is_featured = false).
  * @param page  1-based page number
  * @param pageSize  number of results per page
+ * @param filters optional filters for search
  */
 export async function getNewInMarketProperties(
     page: number,
-    pageSize: number
+    pageSize: number,
+    filters?: {
+        query?: string;
+        type?: string;
+        beds?: string;
+        baths?: string;
+    }
 ): Promise<PaginatedProperties> {
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
 
-    const { data, error, count } = await supabase
+    let queryBuilder = supabase
         .from('properties')
         .select('*', { count: 'exact' })
-        .eq('is_featured', false)
+        .eq('is_featured', false);
+
+    if (filters) {
+        if (filters.query) {
+            queryBuilder = queryBuilder.or(`title.ilike.%${filters.query}%,location.ilike.%${filters.query}%`);
+        }
+        if (filters.type && filters.type !== 'Any Type') {
+            queryBuilder = queryBuilder.ilike('title', `%${filters.type}%`);
+        }
+        if (filters.beds && filters.beds !== '0') {
+            queryBuilder = queryBuilder.gte('beds', parseInt(filters.beds));
+        }
+        if (filters.baths && filters.baths !== '0') {
+            queryBuilder = queryBuilder.gte('baths', parseInt(filters.baths));
+        }
+    }
+
+    const { data, error, count } = await queryBuilder
         .order('created_at', { ascending: true })
         .range(from, to);
 
