@@ -4,6 +4,8 @@ import { getPropertyBySlug } from '@/lib/properties';
 import PropertyGallery from '@/components/property/PropertyGallery';
 import PropertyMapWrapper from '@/components/property/PropertyMapWrapper';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
     params: Promise<{ slug: string }>;
 }

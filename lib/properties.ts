@@ -69,12 +69,13 @@ export async function getPropertyBySlug(slug: string): Promise<Property | null> 
 /**
  * Fetch the featured properties (is_featured = true).
  */
-export async function getFeaturedProperties(): Promise<Property[]> {
+export async function getFeaturedProperties(limit: number = 2): Promise<Property[]> {
     const { data, error } = await supabase
         .from('properties')
         .select('*')
         .eq('is_featured', true)
-        .order('created_at', { ascending: true });
+        .order('created_at', { ascending: true })
+        .limit(limit);
 
     if (error) {
         console.error('Error fetching featured properties:', error);

@@ -4,6 +4,8 @@ import HeroSearch from '../components/sections/HeroSearch';
 import NewInMarket from '../components/sections/NewInMarket';
 import { getFeaturedProperties, getNewInMarketProperties } from '../lib/properties';
 
+export const dynamic = 'force-dynamic';
+
 const PAGE_SIZE = 8;
 
 export default async function Home({
@@ -27,9 +29,16 @@ export default async function Home({
         baths,
     };
 
+    const hasFilters = Boolean(
+        query || 
+        (type && type !== 'Any Type') || 
+        (beds && beds !== '0') || 
+        (baths && baths !== '0')
+    );
+
     const [featuredProperties, { properties: newInMarketProperties, totalCount }] =
         await Promise.all([
-            getFeaturedProperties(),
+            getFeaturedProperties(2),
             getNewInMarketProperties(page, PAGE_SIZE, filters),
         ]);
 
@@ -38,7 +47,7 @@ export default async function Home({
     return (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
             <HeroSearch />
-            <FeaturedCollections properties={featuredProperties} />
+            {!hasFilters && <FeaturedCollections properties={featuredProperties} />}
             <NewInMarket
                 properties={newInMarketProperties}
                 currentPage={page}
